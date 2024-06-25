@@ -1,12 +1,9 @@
 package hexlet.code;
 
 import io.javalin.Javalin;
-import kong.unirest.Unirest;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import java.net.http.HttpResponse;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
