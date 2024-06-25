@@ -1,4 +1,4 @@
-FROM gradle:8.6.0-jdk20
+FROM gradle:8.7.0-jdk21
 
 WORKDIR /app
 
