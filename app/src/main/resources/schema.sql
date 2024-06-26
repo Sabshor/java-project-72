@@ -1,11 +1,7 @@
 DROP TABLE IF EXISTS urls;
 
 CREATE TABLE urls (
-<<<<<<< HEAD
-    id SERIAL PRIMARY KEY,
-=======
     id IDENTITY PRIMARY KEY,
->>>>>>> 4f39567 (change type to IDENTITY)
     name VARCHAR(255) NOT NULL,
     created_at TIMESTAMP AS CURRENT_TIMESTAMP NOT NULL
 );
