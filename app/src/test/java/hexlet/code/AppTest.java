@@ -5,6 +5,9 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AppTest {
@@ -12,7 +15,7 @@ public class AppTest {
     private static String baseUrl;
 
     @BeforeAll
-    public static void beforeAll() {
+    public static void beforeAll() throws SQLException, IOException {
         app = App.getApp();
         app.start(0);
         int port = app.port();

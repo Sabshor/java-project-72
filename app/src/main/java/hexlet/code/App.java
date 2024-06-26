@@ -20,12 +20,13 @@ import java.util.stream.Collectors;
 public final class App {
     private static final String DB_NAME_LOCAL = "project";
     public static void main(String[] args) throws SQLException, IOException {
-        setConnection();
         Javalin app = getApp();
-        app.start(7070);
+        app.start(getPort());
     }
 
-    public static Javalin getApp() {
+    public static Javalin getApp() throws SQLException, IOException {
+        setConnection();
+
         var app = Javalin.create(config -> {
             config.bundledPlugins.enableDevLogging();
             config.fileRenderer(new JavalinJte());
@@ -59,4 +60,9 @@ public final class App {
             return reader.lines().collect(Collectors.joining("\n"));
         }
     }
+    private static int getPort() {
+        String port = System.getenv().getOrDefault("PORT", "7070");
+        return Integer.valueOf(port);
+    }
+
 }
