@@ -2,6 +2,9 @@ package hexlet.code;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import gg.jte.ContentType;
+import gg.jte.TemplateEngine;
+import gg.jte.resolve.ResourceCodeResolver;
 import hexlet.code.controller.RootController;
 import hexlet.code.repository.BaseRepository;
 import hexlet.code.util.NamedRoutes;
@@ -29,12 +32,22 @@ public final class App {
 
         var app = Javalin.create(config -> {
             config.bundledPlugins.enableDevLogging();
-            config.fileRenderer(new JavalinJte());
+            config.fileRenderer(new JavalinJte(createTemplateEngine()));
         });
 
         app.get(NamedRoutes.rootPath(), RootController::index);
 
         return app;
+    }
+
+    private static TemplateEngine createTemplateEngine() {
+        /*Чтобы при проверке приложения автотестами шаблоны подгружались из нужного места, нам потребуется
+        явно указать расположение шаблонов. Для этого нужно будет создать инстанс движка шаблонизатора и используя
+        ResourceCodeResolver указать в нем путь к шаблонам:*/
+        ClassLoader classLoader = App.class.getClassLoader();
+        ResourceCodeResolver codeResolver = new ResourceCodeResolver("templates", classLoader);
+        TemplateEngine templateEngine = TemplateEngine.create(codeResolver, ContentType.Html);
+        return templateEngine;
     }
 
     private static void setConnection() throws SQLException, IOException {
