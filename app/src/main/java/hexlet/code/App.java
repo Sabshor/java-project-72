@@ -76,7 +76,7 @@ public final class App {
             return reader.lines().collect(Collectors.joining("\n"));
         }
     }
-    private static int getPort() {
+    public static int getPort() {
         String port = System.getenv().getOrDefault("PORT", "7070");
         return Integer.valueOf(port);
     }

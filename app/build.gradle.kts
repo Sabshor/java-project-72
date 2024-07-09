@@ -26,11 +26,14 @@ dependencies {
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("io.javalin:javalin:6.1.3")
     implementation("org.slf4j:slf4j-simple:2.0.7")
+    implementation("io.javalin:javalin-bundle:6.1.3")
     // Шаблонизатор и его интеграция с Javalin
     implementation("io.javalin:javalin-rendering:6.1.3")
     // Шаблонизатор Java Template Engine
     implementation("gg.jte:jte:3.1.9")
 
+
+    testImplementation("org.assertj:assertj-core:3.25.3")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.2")
     testImplementation("com.konghq:unirest-java:3.13.0")
