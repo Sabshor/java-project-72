@@ -31,12 +31,12 @@ dependencies {
     implementation("io.javalin:javalin-rendering:6.1.3")
     // Шаблонизатор Java Template Engine
     implementation("gg.jte:jte:3.1.9")
-
+    implementation("com.konghq:unirest-java:3.13.0")
 
     testImplementation("org.assertj:assertj-core:3.25.3")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.2")
-    testImplementation("com.konghq:unirest-java:3.13.0")
 }
 
 tasks.test {

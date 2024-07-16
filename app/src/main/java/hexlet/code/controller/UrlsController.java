@@ -3,6 +3,8 @@ package hexlet.code.controller;
 import hexlet.code.dto.urls.UrlPage;
 import hexlet.code.dto.urls.UrlsPage;
 import hexlet.code.model.Url;
+import hexlet.code.model.UrlCheck;
+import hexlet.code.repository.UrlCheckRepository;
 import hexlet.code.repository.UrlRepository;
 import hexlet.code.util.NamedRoutes;
 import hexlet.code.util.Utils;
@@ -11,7 +13,10 @@ import io.javalin.http.NotFoundResponse;
 import io.javalin.validation.ValidationException;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 
+import static hexlet.code.repository.UrlCheckRepository.getUrlLastCheck;
+//import static hexlet.code.repository.UrlCheckRepository.getUrlsLastCheck;
 import static hexlet.code.util.Utils.getVerifyUrl;
 import static io.javalin.rendering.template.TemplateUtil.model;
 
@@ -53,7 +58,20 @@ public class UrlsController {
     }
 
     public static void index(Context ctx) throws SQLException {
-        var page = new UrlsPage(UrlRepository.getEntities());
+        var urls = UrlRepository.getEntities();
+        var urlsLastChecks = new HashMap<Long, UrlCheck>();
+        urls.forEach(url -> {
+            /*var check = getUrlsLastCheck(url.getId());
+            if (!check.isEmpty()) {
+                urlsLastChecks.putAll(check);
+            }*/
+            var check = getUrlLastCheck(url.getId());
+            if (check != null) {
+                urlsLastChecks.put(url.getId(), check);
+            }
+        });
+
+        var page = new UrlsPage(urls, urlsLastChecks);
         page.setFlash(ctx.consumeSessionAttribute("flash"));
         page.setFlashType(ctx.consumeSessionAttribute("flash-type"));
         ctx.render("urls/index.jte", model("page", page));
@@ -63,9 +81,8 @@ public class UrlsController {
         var id = ctx.pathParamAsClass("id", Long.class).get();
         var url = UrlRepository.find(id)
                 .orElseThrow(() -> new NotFoundResponse("Site not found"));
-        var page = new UrlPage(url);
+        var urlChecks = UrlCheckRepository.getEntityDetails(id);
+        var page = new UrlPage(url, urlChecks);
         ctx.render("urls/show.jte", model("page", page));
     }
-
-
 }

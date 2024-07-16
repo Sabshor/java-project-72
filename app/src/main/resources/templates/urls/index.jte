@@ -1,4 +1,5 @@
 @import hexlet.code.util.NamedRoutes
+@import hexlet.code.util.Utils
 @import hexlet.code.dto.urls.UrlsPage
 @param UrlsPage page
 
@@ -27,10 +28,14 @@ content = @`
                                 <a href="${NamedRoutes.urlPath(url.getId())}">${url.getName()}</a>
                             </td>
                             <td>
-                               empty
+                                @if (page.getLastCheckUrls().containsKey(url.getId()))
+                                    ${Utils.getFormattedData(page.getLastCheckUrls().get(url.getId()).getCreatedAt())}
+                                @endif
                             </td>
                             <td>
-                                код
+                                @if (page.getLastCheckUrls().containsKey(url.getId()))
+                                    ${page.getLastCheckUrls().get(url.getId()).getStatusCode()}
+                                @endif
                             </td>
                         </tr>
                     @endfor
