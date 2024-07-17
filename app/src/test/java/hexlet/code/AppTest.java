@@ -33,27 +33,13 @@ public class AppTest {
                     <html lang="en">
                         <head>
                             <meta charset="UTF-8">
+                            <meta name="description" content="Analyzer content">
                             <title>Анализатор страниц</title>
                         </head>
                        <body>
                             <main>
                                 <section>
-                                    <div>
-                                        <h1>test mock http://localhost:9999</h1>
-                                        <table>
-                                            <thead>
-                                                <tr><th class="col-1">ID</th>
-                                                    <th class="col-1">Код ответа</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>200</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    <h1>test mock</h1>
                                 </section>
                             </main>
                        </body>
@@ -139,14 +125,9 @@ public class AppTest {
     }
 
     @Test
-    public void testMockRunCheckUrl() throws SQLException, InterruptedException {
-
+    public void testMockRunCheckUrl() {
         HttpUrl baseUrl = mockServer.url("/");
-        //HttpUrl baseUrl = mockServer.url("/urls/1/checks/");
         JavalinTest.test(app, (server, client) -> {
-            System.out.println("baseUrl=" + baseUrl.toString());
-            //var url = new Url(Utils.getVerifyUrl(baseUrl.toString()));
-            //UrlRepository.save(url);
             client.post("/urls", "url=".concat(baseUrl.toString()));
             client.post(NamedRoutes.urlCheckPath(1L));
 
@@ -155,11 +136,12 @@ public class AppTest {
 
             var urlCheck = UrlCheckRepository.getUrlLastCheck(1L);
             assertThat(urlCheck.getStatusCode()).isEqualTo(200);
+            assertThat(urlCheck.getH1()).isEqualTo("test mock");
+            assertThat(urlCheck.getTitle()).isEqualTo("Анализатор страниц");
+            assertThat(urlCheck.getDescription()).isEqualTo("Analyzer content");
 
             RecordedRequest request1 = mockServer.takeRequest();
             assertEquals("/", request1.getPath());
-
         });
     }
-
 }

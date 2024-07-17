@@ -1,13 +1,10 @@
 package hexlet.code.repository;
 
 import hexlet.code.model.UrlCheck;
-
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
 
 public class UrlCheckRepository extends BaseRepository {
     public static void save(UrlCheck urlCheck) throws SQLException {
@@ -34,20 +31,6 @@ public class UrlCheckRepository extends BaseRepository {
             }
         }
     }
-
-    public static Optional<UrlCheck> getGetLastCheckDetail(Long idUrl) throws SQLException {
-        //var listChecks = getEntityDetails(idUrl);
-        //listChecks.sort(Comparator.comparing(UrlCheck::getCreatedAt).reversed());
-        return Optional.ofNullable(getEntityDetails(idUrl).get(0));
-    }
-
-    /*public static Map<Long, UrlCheck> getUrlsLastCheck(Long idUrl)  {
-        var urlLastCheck = new HashMap<Long, UrlCheck>();
-        if (!getEntityDetails(idUrl).isEmpty()) {
-            urlLastCheck.put(idUrl, getEntityDetails(idUrl).get(0));
-        }
-        return urlLastCheck;
-    }*/
 
     public static UrlCheck getUrlLastCheck(Long idUrl)  {
         var urlLastCheck = UrlCheck.builder();

@@ -31,6 +31,4 @@ public class Utils {
         }
         return new SimpleDateFormat("dd/MM/yyyy HH:mm").format(date);
     }
-
-
 }

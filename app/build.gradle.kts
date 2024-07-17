@@ -32,6 +32,7 @@ dependencies {
     // Шаблонизатор Java Template Engine
     implementation("gg.jte:jte:3.1.9")
     implementation("com.konghq:unirest-java:3.13.0")
+    implementation("org.jsoup:jsoup:1.18.1")
 
     testImplementation("org.assertj:assertj-core:3.25.3")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")

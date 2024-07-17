@@ -16,7 +16,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 import static hexlet.code.repository.UrlCheckRepository.getUrlLastCheck;
-//import static hexlet.code.repository.UrlCheckRepository.getUrlsLastCheck;
 import static hexlet.code.util.Utils.getVerifyUrl;
 import static io.javalin.rendering.template.TemplateUtil.model;
 
@@ -32,8 +31,6 @@ public class UrlsController {
             if (UrlRepository.findByName(verifyUrl).isPresent()) {
                 ctx.sessionAttribute("flash", "Страница уже существует");
                 ctx.sessionAttribute("flash-type", "info");
-                //ctx.sessionAttribute("flash-type", "warning");
-                //ctx.sessionAttribute("flash-type", "dismissible");
             } else {
                 var url = new Url(getVerifyUrl(verifyUrl));
                 UrlRepository.save(url);
@@ -43,17 +40,12 @@ public class UrlsController {
             ctx.consumeSessionAttribute("url-value");
             ctx.redirect(NamedRoutes.urlsPath());
         } catch (ValidationException e) {
-            //ctx.sessionAttribute("flash", "Некорректный URL");
             var errorMessage = e.getErrors().entrySet().stream().findFirst()
                     .get().getValue().get(0).getMessage();
             ctx.sessionAttribute("flash", errorMessage);
             ctx.sessionAttribute("flash-type", "warning");
             ctx.sessionAttribute("url-value", ctx.formParam("url"));
             ctx.redirect(NamedRoutes.rootPath());
-            /*var page = new MainPage(ctx.formParam("url"));
-            page.setFlash(ctx.consumeSessionAttribute("flash"));
-            page.setFlashType(ctx.consumeSessionAttribute("flash-type"));
-            ctx.render("index.jte", model("page", page)).status(422);*/
         }
     }
 
@@ -61,16 +53,11 @@ public class UrlsController {
         var urls = UrlRepository.getEntities();
         var urlsLastChecks = new HashMap<Long, UrlCheck>();
         urls.forEach(url -> {
-            /*var check = getUrlsLastCheck(url.getId());
-            if (!check.isEmpty()) {
-                urlsLastChecks.putAll(check);
-            }*/
             var check = getUrlLastCheck(url.getId());
             if (check != null) {
                 urlsLastChecks.put(url.getId(), check);
             }
         });
-
         var page = new UrlsPage(urls, urlsLastChecks);
         page.setFlash(ctx.consumeSessionAttribute("flash"));
         page.setFlashType(ctx.consumeSessionAttribute("flash-type"));

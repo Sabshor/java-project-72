@@ -7,9 +7,6 @@ import static io.javalin.rendering.template.TemplateUtil.model;
 
 public class RootController {
     public static void index(Context ctx) {
-        //var page = new MainPage();
-        //var page = new MainPage(ctx.formParam("url"));
-
         //сохранение ошибочного значения url, введенного пользователем
         //не знаю как использовать это значение через класс, а не через куки при передаче на другую страницу?
         var page = new MainPage(ctx.consumeSessionAttribute("url-value"));
