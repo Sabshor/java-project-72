@@ -4,6 +4,7 @@
 @param UrlPage page
 
 @template.layout.page(
+page = page,
 content = @`
     <section>
         <div class="container-lg mt-5">

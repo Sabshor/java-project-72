@@ -43,7 +43,7 @@ public class UrlsCheckController {
             ctx.render("urls/show.jte", model("page", page));
         } catch (Exception e) {
             ctx.sessionAttribute("flash", "Некорректный адрес");
-            ctx.sessionAttribute("flashType", "warning");
+            ctx.sessionAttribute("flash-type", "danger");
             ctx.redirect(NamedRoutes.urlPath(id));
         }
     }

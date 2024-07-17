@@ -70,6 +70,8 @@ public class UrlsController {
                 .orElseThrow(() -> new NotFoundResponse("Site not found"));
         var urlChecks = UrlCheckRepository.getEntityDetails(id);
         var page = new UrlPage(url, urlChecks);
+        page.setFlash(ctx.consumeSessionAttribute("flash"));
+        page.setFlashType(ctx.consumeSessionAttribute("flash-type"));
         ctx.render("urls/show.jte", model("page", page));
     }
 }
