@@ -15,6 +15,11 @@ Page analyzer executes basic SEO analysis of any given website, defining:
 * description
 <br/><br/>
 
+Тo start the application on http://localhost:7070/
+```
+make run
+```
+
 ### Technologies
 * Javalin
 * Bootstrap
